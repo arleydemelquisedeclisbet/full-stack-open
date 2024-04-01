@@ -17,8 +17,10 @@ const App = () => {
   ]
 
   const getRandom = () => Math.floor(Math.random() * anecdotes.length)
+  const getPoints = anecdotes.reduce((acc, _current, i) => ({ ...acc, [i]: 0 }), {} )
 
   const [selected, setSelected] = useState(getRandom)
+  const [points, setPoints] = useState(getPoints)
 
   const nextRandomAnecdote = () => {
 
@@ -29,9 +31,15 @@ const App = () => {
     setSelected(random)
   }
 
+  const addVote = () => {
+    setPoints({...points, [selected]: points[selected] + 1 })
+  }
+
   return (
     <>
       <Display value={anecdotes[selected]} />
+      <Display value={`Has ${points[selected]} votes`} />
+      <Button text={'Vote'} handleClick={addVote} />
       <Button text={'Next anecdote'} handleClick={nextRandomAnecdote} />
     </>
   )
