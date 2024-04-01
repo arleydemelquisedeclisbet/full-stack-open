@@ -25,12 +25,19 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>Statistics</h1>
-      <Display value={`good ${good}`} />
-      <Display value={`neutral ${neutral}`} />
-      <Display value={`bad ${bad}`} />
-      <Display value={`all ${getTotalVotes()}`} />
-      <Display value={`average ${getAverage()}`} />
-      <Display value={`positive ${getPositivePercent()} %`} />
+      {
+        getTotalVotes() > 0 ? 
+          <>
+            <Display value={`good ${good}`} />
+            <Display value={`neutral ${neutral}`} />
+            <Display value={`bad ${bad}`} />
+            <Display value={`all ${getTotalVotes()}`} />
+            <Display value={`average ${getAverage()}`} />
+            <Display value={`positive ${getPositivePercent()} %`} />
+          </>
+        : <Display value={'No feedback given'} />
+          
+      }
     </>
   )
 }
