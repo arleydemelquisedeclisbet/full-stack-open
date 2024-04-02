@@ -1,8 +1,9 @@
-# React + Vite
+# Course info
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Steps
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Refactoriza el código para que conste de tres componentes nuevos: Header, Content y Total
+2. Refactoriza el componente Content para que solo representa tres componentes Part de los cuales cada uno representa el nombre y el número de ejercicios de una parte
+3. Modifica las definiciones de las variables del componente App y también refactoriza la aplicación para que siga funcionando
+4. Coloca los objetos en un array. Modifica las definiciones de las variables de App y modifica las otras partes de la aplicación respectivamente
+5. Cambia el curso y sus partes a un solo objeto JavaScript. Arregla todo lo que se rompa
