@@ -4,6 +4,15 @@ const Button = ({ text, handleClick }) => <button onClick={handleClick}>{text}</
 
 const Display = ({ value }) => <div>{value}</div>
 
+const Anecdote = ({ anecdote, votes }) => {
+  return (
+    <>
+      <Display value={anecdote} />
+      <Display value={`Has ${votes} votes`} />
+    </>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -35,12 +44,30 @@ const App = () => {
     setPoints({...points, [selected]: points[selected] + 1 })
   }
 
+  const getIndexOfAnecdoteWithMostVotes = () => {
+    const arrayPoints = Object.entries(points)
+    const mostVotes = arrayPoints.reduce((prev, current) => prev[1] > current[1] ? prev : current)
+    return mostVotes[0]
+  }
+
+  const isThereAnyVote = () => Object.entries(points).find(point => point[1] > 0)
+
   return (
-    <>
-      <Display value={anecdotes[selected]} />
-      <Display value={`Has ${points[selected]} votes`} />
+    <> 
+      <h1>Anecdote of the day</h1>
+      <Anecdote anecdote={anecdotes[selected]} votes={points[selected]} />
       <Button text={'Vote'} handleClick={addVote} />
       <Button text={'Next anecdote'} handleClick={nextRandomAnecdote} />
+
+      <h1>Anecdote with most votes</h1>
+      {
+        isThereAnyVote() 
+          ? <Anecdote 
+              anecdote={anecdotes[getIndexOfAnecdoteWithMostVotes()]} 
+              votes={points[getIndexOfAnecdoteWithMostVotes()]} 
+            />
+          : <Display value={'No votes given'} />
+      }      
     </>
   )
 }
