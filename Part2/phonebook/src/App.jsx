@@ -4,8 +4,9 @@ import Person from './components/Person'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567' }
+    { name: 'Arto Hellas', number: '040-123456', id: 1 }
   ])
+  const [personsToShow, setPersonsToShow] = useState(persons)
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
@@ -19,9 +20,18 @@ const App = () => {
     setNewName('')
   }
 
+  const handleSearchValue = e => {
+    const text = e.target.value.toUpperCase()
+    setPersonsToShow(persons.filter(p => p.name.toUpperCase().includes(text)))
+  }
+
   return (
     <>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with: <input onChange={handleSearchValue} />
+      </div>
+      <h2>Add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={e => setNewName(e.target.value)} />
@@ -35,8 +45,8 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul style={{listStyleType:'none', paddingLeft: 0}} >
-        {persons.map(({ name, number }) =>
-          <Person key={name} name={name} number={number} />
+        {personsToShow.map(({ name, number, id }) =>
+          <Person key={id} name={name} number={number} />
         )}
       </ul>
     </>
