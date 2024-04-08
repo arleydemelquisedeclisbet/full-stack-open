@@ -10,3 +10,4 @@
 6. Modifica la aplicación de modo que el estado inicial de los datos se obtenga del servidor mediante la librería axios. Completa la obtención de los datos con un Effect hook. ✔
 7. Actualmente, los números que se agregan a la agenda telefónica no se guardan en un servidor backend. Soluciona esta situación. ✔
 8. Extrae el código que maneja la comunicación con el backend en su propio módulo. ✔
+9. Permite a los usuarios eliminar entradas de la agenda telefónica. ✔
