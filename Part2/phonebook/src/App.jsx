@@ -1,40 +1,34 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
+import personsService from './services/persons'
+
 const App = () => {
 
-  const personUrl = 'http://localhost:3001/persons'
   const [persons, setPersons] = useState([])
   const [personsToShow, setPersonsToShow] = useState(persons)
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
-  useEffect(() => {
-    axios.get(personUrl).then(({ data }) => setPersons(data))
-  }, [])
+  useEffect(() => { personsService.getAll().then(setPersons) }, [])
 
   const addPerson = e => {
     e.preventDefault()
 
     persons.findIndex(({ name }) => name === newName) >= 0
       ? alert(`${newName} is already added to phonebook`)
-      : axios.post(personUrl, { name: newName, number: newNumber}).then(({ data }) => {
-        setPersons(persons.concat(data))
-      }) 
+      : personsService.addPerson({ name: newName, number: newNumber })
+        .then(newPerson => setPersons(persons.concat(newPerson)))
 
     setNewName('')
     setNewNumber('')
   }
 
-  const handleSearchValue = e => {
-    const text = e.target.value.toUpperCase()
-    setFilter(text)
-  }
+  const handleSearchValue = e => { setFilter(e.target.value.toUpperCase()) }
 
   useEffect(() => {
     const filteredPersons = persons.filter(p => p.name.toUpperCase().includes(filter))
