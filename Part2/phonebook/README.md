@@ -13,3 +13,4 @@
 9. Permite a los usuarios eliminar entradas de la agenda telefónica. ✔
 10. Cambia la funcionalidad para que si se agrega un número a un usuario que ya existe, el nuevo número reemplace al antiguo. ✔
 11. Mostrar una notificación que dure unos segundos después de que se ejecute una operación exitosa (se agrega una persona o se cambia un número). ✔
+12. Muestre un mensaje cuando la operación no tiene éxito. Los mensajes mostrados para eventos exitosos y no exitosos deben lucir diferentes. ✔

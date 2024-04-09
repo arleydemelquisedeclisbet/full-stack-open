@@ -30,6 +30,10 @@ const App = () => {
           handleMessage(`Updated ${updatedPerson.name}`, 'success')
           setPersons(persons.map(p => p.id !== personFound.id ? p : updatedPerson))
         })
+        .catch(error => {
+          console.error(error.message)
+          handleMessage(`Information of ${personFound.name} has already been removed from server`, 'error')
+        })
       }
     } else {
       personsService.addPerson({ name: newName, number: newNumber })
@@ -67,9 +71,13 @@ const App = () => {
             handleMessage(`Deleted ${foundPersonToDelete.name}`, 'success')
             setPersons(persons.filter(p => p.id !== deletedId))
           })
+          .catch(error => {
+            console.error(error.message)
+            handleMessage(`Information of ${foundPersonToDelete.name} has already been removed from server`, 'error')
+          })
       }
     } else {
-      alert(`Persona con id ${id} no está en la lista`)
+      handleMessage(`Persona con id ${id} no está en la lista`, 'error')
     }
   }
 
