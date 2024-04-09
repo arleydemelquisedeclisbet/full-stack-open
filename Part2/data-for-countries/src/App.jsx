@@ -19,6 +19,10 @@ const App = () => {
     setCountriesToShow(filterCountries)
   }
 
+  const handleOnClick = country => {
+    setCountriesToShow([country])
+  }
+
   return (
     <>
       <h2>Countries</h2>
@@ -30,7 +34,9 @@ const App = () => {
             ? <DetailCountry country={countriesToShow[0]} />
             : <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
               {countriesToShow.map(country => (
-                <li key={country.cca3}>{country.name.common}</li>
+                <li key={country.cca3}>
+                  {country.name.common} <button onClick={() => handleOnClick(country)}>show</button>
+                </li>
               ))}
             </ul>
         }
