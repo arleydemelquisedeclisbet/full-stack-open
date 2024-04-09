@@ -5,6 +5,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
 import personsService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
 
@@ -13,6 +14,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState('')
+  const [className, setClassName] = useState('')
 
   useEffect(() => { personsService.getAll().then(setPersons) }, [])
 
@@ -23,16 +26,28 @@ const App = () => {
     if (personFound) {
       const updatePerson = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one`)
       if (updatePerson) {
-        personsService.updatePerson({...personFound, number: newNumber}).then(updatedPerson => {
+        personsService.updatePerson({ ...personFound, number: newNumber }).then(updatedPerson => {
+          handleMessage(`Updated ${updatedPerson.name}`, 'success')
           setPersons(persons.map(p => p.id !== personFound.id ? p : updatedPerson))
         })
       }
     } else {
       personsService.addPerson({ name: newName, number: newNumber })
-        .then(newPerson => setPersons(persons.concat(newPerson)))
+        .then(newPerson => {
+          handleMessage(`Added ${newName}`, 'success')
+          setPersons(persons.concat(newPerson))
+        })
     }
     setNewName('')
     setNewNumber('')
+  }
+
+  const handleMessage = (msg, className) => {
+    setClassName(className)
+    setMessage(msg)
+    setTimeout(() => {
+      setMessage(null)
+    }, 4000)
   }
 
   const handleSearchValue = e => { setFilter(e.target.value.toUpperCase()) }
@@ -40,7 +55,7 @@ const App = () => {
   useEffect(() => {
     const filteredPersons = persons.filter(p => p.name.toUpperCase().includes(filter))
     setPersonsToShow(filteredPersons)
-  }, [ persons, filter ])
+  }, [persons, filter])
 
   const deletePerson = id => {
     const foundPersonToDelete = persons.find(p => p.id === id)
@@ -48,7 +63,10 @@ const App = () => {
       const deletePerson = window.confirm(`Delete ${foundPersonToDelete.name} ?`)
       if (deletePerson) {
         personsService.deletePerson(id)
-          .then(deletedId => setPersons(persons.filter(p => p.id !== deletedId)))
+          .then(deletedId => {
+            handleMessage(`Deleted ${foundPersonToDelete.name}`, 'success')
+            setPersons(persons.filter(p => p.id !== deletedId))
+          })
       }
     } else {
       alert(`Persona con id ${id} no está en la lista`)
@@ -58,19 +76,21 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
+
+      <Notification message={message} className={className} />
       <Filter filter={filter} handleOnChange={handleSearchValue} />
-      
+
       <h3>Add a new</h3>
-      <PersonForm onSubmit={e => addPerson(e)} 
-        name={newName} 
-        number={newNumber} 
-        setNewName={e => setNewName(e.target.value)} 
+      <PersonForm onSubmit={e => addPerson(e)}
+        name={newName}
+        number={newNumber}
+        setNewName={e => setNewName(e.target.value)}
         setNewNumber={e => setNewNumber(e.target.value)}
       />
-      
+
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} handleDelete={deletePerson}/>
-      
+      <Persons persons={personsToShow} handleDelete={deletePerson} />
+
     </>
   )
 }
