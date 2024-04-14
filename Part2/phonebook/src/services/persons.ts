@@ -1,21 +1,22 @@
 import axios from 'axios'
 
-const personUrl = 'http://localhost:3001/api/persons'
+// const baseUrlPersons = 'http://localhost:3001/api/persons'
+const baseUrlPersons = 'https://backend-full-stack-open.onrender.com/api/persons'
 
 const getAll = () => {
-    return axios.get(personUrl).then(({ data }) => data)
+    return axios.get(baseUrlPersons).then(({ data }) => data)
 }
 
 const addPerson = newPerson => {
-    return axios.post(personUrl, newPerson).then(({ data }) => data)
+    return axios.post(baseUrlPersons, newPerson).then(({ data }) => data)
 }
 
 const updatePerson = person => {
-    return axios.put(`${personUrl}/${person.id}`, person).then(({ data }) => data)
+    return axios.put(`${baseUrlPersons}/${person.id}`, person).then(({ data }) => data)
 }
 
 const deletePerson = id => {
-    return axios.delete(`${personUrl}/${id}`)
+    return axios.delete(`${baseUrlPersons}/${id}`)
 }
 
 export default {
