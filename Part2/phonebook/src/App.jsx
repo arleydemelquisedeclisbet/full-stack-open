@@ -32,7 +32,7 @@ const App = () => {
         })
         .catch(error => {
           console.error(error.message)
-          handleMessage(`Information of ${personFound.name} has already been removed from server`, 'error')
+          handleMessage(`Information of ${personFound.name} has already been removed from server: ${error}`, 'error')
         })
       }
     } else {
@@ -67,9 +67,9 @@ const App = () => {
       const deletePerson = window.confirm(`Delete ${foundPersonToDelete.name} ?`)
       if (deletePerson) {
         personsService.deletePerson(id)
-          .then(deletedId => {
+          .then(() => {
             handleMessage(`Deleted ${foundPersonToDelete.name}`, 'success')
-            setPersons(persons.filter(p => p.id !== deletedId))
+            setPersons(persons.filter(p => p.id !== id))
           })
           .catch(error => {
             console.error(error.message)

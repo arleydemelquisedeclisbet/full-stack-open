@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const personUrl = 'http://localhost:3001/persons'
+const personUrl = 'http://localhost:3001/api/persons'
 
 const getAll = () => {
     return axios.get(personUrl).then(({ data }) => data)
@@ -15,7 +15,7 @@ const updatePerson = person => {
 }
 
 const deletePerson = id => {
-    return axios.delete(`${personUrl}/${id}`).then(({ data: { id } }) => id)
+    return axios.delete(`${personUrl}/${id}`)
 }
 
 export default {
