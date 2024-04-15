@@ -41,6 +41,11 @@ const App = () => {
           handleMessage(`Added ${newName}`, 'success')
           setPersons(persons.concat(newPerson))
         })
+        .catch(error => {
+          const message = error.response?.data?.message ?? error.message
+          console.error(message)
+          handleMessage(`Error agregando persona: ${message}`, 'error')
+        })
     }
     setNewName('')
     setNewNumber('')
@@ -51,7 +56,7 @@ const App = () => {
     setMessage(msg)
     setTimeout(() => {
       setMessage(null)
-    }, 4000)
+    }, 5000)
   }
 
   const handleSearchValue = e => { setFilter(e.target.value.toUpperCase()) }
