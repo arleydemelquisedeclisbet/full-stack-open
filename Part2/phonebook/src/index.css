@@ -76,10 +76,10 @@ form {
         span {
             margin: auto 2rem auto 2rem;
             padding: auto 1rem auto 1rem;
-            width:100px;
-            text-overflow:ellipsis;
-            overflow:hidden;
-            white-space:nowrap;
+            width: 8rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
     }
 }
@@ -135,6 +135,7 @@ button {
 }
 
 hr {
+    width: 10rem;
     border-top: .1em solid darkcyan;
     border-bottom: .1em solid white;
     border-left: .1em solid white;
