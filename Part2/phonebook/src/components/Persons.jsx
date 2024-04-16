@@ -4,7 +4,10 @@ const Persons = ({ persons, handleDelete }) => {
     return (
         <ul style={{ listStyleType: 'none', paddingLeft: 0 }} >
             {persons.map(person =>
+            <>
                 <Person key={person.id} person={person} handleDelete={handleDelete} />
+                <hr />
+            </>
             )}
         </ul>
     )

@@ -90,24 +90,37 @@ const App = () => {
   }
 
   return (
-    <>
-      <h2>Phonebook</h2>
+    <div className='container'>
+      <header>
+        <h2>Phonebook</h2>
+        <Filter filter={filter} handleOnChange={handleSearchValue} />
+      </header>
 
       <Notification message={message} className={className} />
-      <Filter filter={filter} handleOnChange={handleSearchValue} />
 
-      <h3>Add a new</h3>
-      <PersonForm onSubmit={e => addPerson(e)}
-        name={newName}
-        number={newNumber}
-        setNewName={e => setNewName(e.target.value)}
-        setNewNumber={e => setNewNumber(e.target.value)}
-      />
+      { personsToShow.length > 0
+        ? <section className='numbers'>
+            <h3>Numbers</h3>
+            <Persons persons={personsToShow} handleDelete={deletePerson} />
+          </section>
+        : <div className='no-found'>No se encontraron números para mostrar...</div>
+      }      
 
-      <h3>Numbers</h3>
-      <Persons persons={personsToShow} handleDelete={deletePerson} />
+      <section className='add-new'>
+        <h3>Add a new</h3>
+        <PersonForm onSubmit={e => addPerson(e)}
+          name={newName}
+          number={newNumber}
+          setNewName={e => setNewName(e.target.value)}
+          setNewNumber={e => setNewNumber(e.target.value)}
+        />
+      </section>
 
-    </>
+      <footer>
+        <h4>Note app, Wilmar de MelquisedecLisbet, University of Helsinki 2024</h4>
+      </footer>
+
+    </div>
   )
 }
 
