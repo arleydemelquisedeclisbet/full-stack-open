@@ -29,10 +29,13 @@ const App = () => {
         personsService.updatePerson({ ...personFound, number: newNumber }).then(updatedPerson => {
           handleMessage(`Updated ${updatedPerson.name}`, 'success')
           setPersons(persons.map(p => p.id !== personFound.id ? p : updatedPerson))
+          setNewName('')
+          setNewNumber('')
         })
         .catch(error => {
-          console.error(error.message)
-          handleMessage(`Information of ${personFound.name} has already been removed from server: ${error}`, 'error')
+          const message = error.response?.data?.message ?? error.message
+          console.error(`Error actualizando persona: `, message)
+          handleMessage(message, 'error')
         })
       }
     } else {
@@ -40,15 +43,15 @@ const App = () => {
         .then(newPerson => {
           handleMessage(`Added ${newName}`, 'success')
           setPersons(persons.concat(newPerson))
+          setNewName('')
+          setNewNumber('')
         })
         .catch(error => {
           const message = error.response?.data?.message ?? error.message
-          console.error(message)
-          handleMessage(`Error agregando persona: ${message}`, 'error')
+          console.error(`Error agregando persona: `, message)
+          handleMessage(message, 'error')
         })
     }
-    setNewName('')
-    setNewNumber('')
   }
 
   const handleMessage = (msg, className) => {
